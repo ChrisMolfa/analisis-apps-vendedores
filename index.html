@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Interactivo de Apps para Vendedores con IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #383A3F;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .active-filter, .gemini-button {
+            background-color: #3D5A80;
+            color: #FFFFFF;
+            border-color: #3D5A80;
+        }
+        .gemini-button:hover {
+            background-color: #2c425e;
+        }
+        .gemini-button:disabled {
+            background-color: #98a4b3;
+            cursor: not-allowed;
+        }
+        .inactive-filter {
+            background-color: #FFFFFF;
+            color: #3D5A80;
+            border-color: #E0E0E0;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .card-shadow:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -2px rgb(0 0 0 / 0.07);
+        }
+        .smooth-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 0.1em 0.4em;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3D5A80;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .gemini-output h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #3D5A80;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .gemini-output ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+         .gemini-output li {
+            margin-bottom: 0.5rem;
+        }
+        .mockup-container {
+            background-color: #f9fafb;
+            border: 8px solid #1f2937;
+            border-radius: 2rem;
+            padding: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            font-size: 0.7rem;
+            line-height: 1.2;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            color: #1f2937;
+        }
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        .mockup-body {
+            padding-top: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .mockup-footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        .mockup-footer .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.6rem;
+            color: #6b7280;
+        }
+        .mockup-footer .nav-item span {
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#3D5A80] mb-2">Análisis Interactivo de Apps para Vendedores con IA</h1>
+            <p class="text-lg text-gray-600">Una deconstrucción de las estrategias de UX y producto en el ecosistema global, potenciada por Gemini.</p>
+        </header>
+        <main>
+            <section id="intro" class="mb-16 bg-white p-8 rounded-2xl card-shadow">
+                <h2 class="text-2xl font-bold text-[#3D5A80] mb-4">El Desafío: Transformar la Experiencia del Vendedor</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Este análisis surge de la necesidad de reorganizar y rediseñar la experiencia in-app, transformándola de una serie de funciones desconectadas a un verdadero centro de operaciones unificado para los negocios. El objetivo es visibilizar el valor total del ecosistema, integrando adquirencia, banca, créditos y gestión en una única experiencia fluida. Esta herramienta interactiva te permitirá explorar cómo los líderes globales abordan este desafío, cuáles son sus estrategias visuales y cómo estructuran su propuesta de valor para convertirse en socios estratégicos de los vendedores.
+                </p>
+            </section>
+            
+            <section id="home-comparator" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-[#3D5A80] mb-8">Comparador de Paradigmas de Home</h2>
+                <div class="bg-white p-6 md:p-8 rounded-2xl card-shadow">
+                    <div class="text-center mb-6">
+                        <p class="text-gray-700 mb-4">Seleccioná una o varias aplicaciones para comparar su foco estratégico en la home. El gráfico muestra qué tan prioritaria es cada área en su pantalla principal.</p>
+                        <div id="comparator-selector" class="flex flex-wrap justify-center gap-2">
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="strategyRadarChart"></canvas>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="hypothesis-generator-button" class="gemini-button px-6 py-3 font-semibold rounded-full smooth-transition" disabled>✨ Generar Hipótesis de UX con IA</button>
+                        <div id="hypothesis-output" class="mt-6 text-left max-w-2xl mx-auto"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="competitor-explorer" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-[#3D5A80] mb-8">Explorador de Competidores</h2>
+                <div class="mb-8 flex flex-wrap justify-center items-center gap-3">
+                    <span class="font-semibold mr-2">Filtrar por Arquetipo:</span>
+                    <div id="filter-buttons" class="flex flex-wrap justify-center gap-2">
+                    </div>
+                </div>
+                <div id="apps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                </div>
+            </section>
+
+            <section id="mockup-gallery" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-[#3D5A80] mb-8">Galería de Mockups de Experiencia de Usuario</h2>
+                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Visualizá la arquitectura de información de las homes de los principales competidores. Estos mockups de alta fidelidad representan su foco estratégico y la jerarquía de la información que presentan al vendedor.</p>
+                <div id="mockups-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                </div>
+            </section>
+            
+            <section id="analysis-details" class="hidden">
+                 <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 smooth-transition" id="modal-backdrop">
+                    <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative" id="modal-content">
+                        <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                        <div id="details-content"></div>
+                        <div class="mt-8 border-t pt-6">
+                            <h3 class="text-xl font-bold text-[#3D5A80] mb-4">Análisis Estratégico con IA</h3>
+                             <button id="gemini-analysis-button" class="gemini-button px-5 py-2.5 text-sm font-semibold rounded-full smooth-transition">✨ Analizar Competidor con IA</button>
+                             <div id="gemini-analysis-output" class="mt-4 text-left"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>Generado a partir del "Análisis UX: Apps Vendedor Globales" y "Análisis Visual de las Top 20 Apps para Vendedores". Potenciado por Gemini.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Datos de las aplicaciones
+        const appData = [
+            {
+                rank: 0,
+                name: "Mercado Pago (Actual)",
+                company: "Mercado Libre",
+                market: "LatAm",
+                users: "N/A",
+                archetype: "Experiencia Bifurcada",
+                strategyFocus: { sales: 2, balance: 5, tools: 3, operations: 3, credit: 4 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Mercado Pago: La Experiencia Bifurcada</h3>
+                    <p class="mb-4"><strong>Estrategia Actual:</strong> La experiencia para vendedores está dividida en dos paradigmas distintos. Una "Home Principal" que funciona como un cockpit financiero (centrada en el saldo de la cuenta) y una sección separada de "Seu Negócio" que actúa como un centro de operaciones (centrada en herramientas de cobro y gestión). </p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La home principal prioriza el <strong>saldo en cuenta</strong> y productos financieros como créditos y tarjetas, similar a un neobanco. Sin embargo, las métricas de venta y herramientas operativas están relegadas a una sección secundaria, de bajo tráfico. Esto crea una fricción para el vendedor, que debe navegar activamente entre "gestionar mi dinero" y "gestionar mi negocio".</p>
+                    <p><strong>El Problema a Resolver:</strong> La falta de una narrativa visual y funcional unificada. La oportunidad estratégica reside en fusionar estos dos mundos en una única experiencia "home-centric" que integre la visión financiera con las herramientas operativas, tal como lo hacen competidores como Square o Stone.</p>
+                `,
+                mockup: {
+                    title: "Mercado Pago: La Experiencia Bifurcada Actual",
+                    analysis: `<strong>Foco Estratégico:</strong> La experiencia está dividida. La <strong>Home Principal (izquierda)</strong> se centra en el <code>Saldo</code> y productos financieros, mientras que la <strong>Home de Negocio (derecha)</strong> se enfoca en herramientas de <code>Cobro</code> y gestión. Esta separación visual y funcional es el principal punto de fricción y la mayor oportunidad de rediseño.`,
+                    visual: `
+                        <div class="mockup-body !pt-0 flex-row gap-2">
+                            <div class="w-1/2 flex flex-col border-r pr-2">
+                                <div class="mockup-header !border-none">
+                                    <div class="font-semibold text-gray-800"><span>▫️</span> Olá, Adidas</div>
+                                    <div class="text-xs text-gray-600">🔔</div>
+                                </div>
+                                <div class="p-3 bg-yellow-100 rounded-lg text-center mt-2">
+                                    <div class="text-xs text-gray-600">Seu saldo</div>
+                                    <div class="text-xl font-bold text-gray-900">R$ 400,20</div>
+                                </div>
+                                <div class="text-xs font-semibold text-gray-500 mt-4">Empréstimos</div>
+                                <div class="p-2 bg-white rounded-lg border mt-1">
+                                    <div class="text-xs text-gray-700">Express para investir...</div>
+                                    <div class="font-bold text-blue-600">R$ 100.000</div>
+                                </div>
+                                <div class="text-xs font-semibold text-gray-500 mt-4">Últimas atividades</div>
+                                <div class="text-xs space-y-1 mt-1 text-gray-800">
+                                    <div class="flex justify-between"><span>Venda com Point</span> <span>R$ 1.200</span></div>
+                                    <div class="flex justify-between"><span>Venda com Point</span> <span>R$ 2.400</span></div>
+                                </div>
+                                <div class="mt-auto p-2 bg-gray-800 text-white rounded-lg text-center text-xs">
+                                    Sistema de gestão para transformar seu negócio
+                                </div>
+                            </div>
+                            <div class="w-1/2 flex flex-col pl-2">
+                                <div class="mockup-header !border-none">
+                                    <div class="font-semibold text-gray-800">Seu negócio</div>
+                                    <div class="text-xs text-gray-600">❓</div>
+                                </div>
+                                <div class="text-sm font-bold mt-2 text-gray-800">Cobrar</div>
+                                <div class="grid grid-cols-2 gap-2 text-center text-xs mt-1 text-gray-700">
+                                    <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Point</div>
+                                    <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>QR/Pix</div>
+                                    <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Link</div>
+                                    <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Point Tap</div>
+                                </div>
+                                <div class="text-sm font-bold mt-4 text-gray-800">Métricas de setembro</div>
+                                <div class="p-2 bg-white rounded-lg border mt-1 grid grid-cols-2 text-center text-gray-800">
+                                    <div><div class="font-bold">R$ 28.598</div><div class="text-xxs text-gray-500">vendas</div></div>
+                                    <div><div class="font-bold">R$ 28.598</div><div class="text-xxs text-gray-500">recebimentos</div></div>
+                                </div>
+                                <div class="text-sm font-bold mt-4 text-gray-800">Ferramentas</div>
+                                <div class="grid grid-cols-2 gap-2 text-center text-xs mt-1 text-gray-700">
+                                     <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Simulador</div>
+                                     <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Custos</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer mt-auto">
+                            <div class="nav-item"><span>🏠</span>Início</div>
+                            <div class="nav-item"><span>📈</span>Relatórios</div>
+                            <div class="nav-item text-blue-600"><span>🔵</span></div>
+                            <div class="nav-item"><span>🔔</span>Notificações</div>
+                            <div class="nav-item"><span>≡</span>Mais</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 1,
+                name: "Square Point of Sale",
+                company: "Block, Inc.",
+                market: "EE. UU., Global",
+                users: "~4M vendedores",
+                archetype: "Ecosistema Liderado por POS",
+                strategyFocus: { sales: 5, balance: 3, tools: 4, operations: 5, credit: 4 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Square: El Centro de Inteligencia</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> El POS es el "Caballo de Troya". Capturan al vendedor con un punto de venta fácil de usar para luego integrarlo en un ecosistema completo de banca, préstamos y gestión.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> Prioriza el rendimiento del negocio. La pantalla principal muestra las <strong>ventas brutas</strong> del día y comparativas, no solo el saldo. Funciona como un centro de control que le dice al vendedor "cómo va tu negocio".</p>
+                    <p><strong>Productos de Valor (Crédito):</strong> El crédito no es un botón fijo. Aparece como una <strong>oferta contextual y proactiva</strong> en la home después de un período de buenas ventas, vinculando el rendimiento a la oportunidad. Es un ejemplo de "finanzas inteligentes".</p>
+                `,
+                mockup: {
+                    title: "Square: La Home como Centro de Inteligencia",
+                    analysis: `<strong>Foco Estratégico:</strong> La home prioriza el rendimiento del negocio (<code>Ventas Brutas</code>) sobre el saldo. Es un centro de inteligencia que le dice al vendedor "cómo va tu negocio".<br><br><strong>Venta Cruzada Contextual:</strong> El crédito (<code>Square Loans</code>) no es un botón fijo, sino una tarjeta proactiva y personalizada que aparece en el momento de mayor confianza del vendedor, vinculando el rendimiento a la oportunidad. Esto refleja su estrategia de "finanzas inteligentes".`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800"><span>▫️</span> Square</div>
+                            <div class="text-xs text-gray-600">Hola, Negocio... 🔔</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="p-3 bg-white rounded-lg shadow-sm">
+                                <div class="text-xs text-gray-500">VENTAS BRUTAS (Hoy)</div>
+                                <div class="text-2xl font-bold text-gray-800">$1,250.50 <span class="text-sm font-semibold text-green-600">▲15%</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2"><div class="bg-green-500 h-1.5 rounded-full" style="width: 75%"></div></div>
+                            </div>
+                            <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg shadow-sm text-center">
+                                <div class="font-bold text-blue-800">💡 OPORTUNIDAD DE CRECIMIENTO</div>
+                                <p class="text-xs text-blue-700 mt-1">Tus ventas crecieron un 25% este mes. Calificás para un préstamo de $5,000.</p>
+                                <button class="text-xs font-bold text-blue-800 mt-2">Ver oferta →</button>
+                            </div>
+                            <div class="text-xs font-semibold text-gray-500">Actividad Reciente</div>
+                            <div class="text-xs space-y-2 text-gray-800">
+                                <div class="flex justify-between"><span>🛒 Venta #1245</span> <span>$45.00</span></div>
+                                <div class="flex justify-between"><span>🏦 Transferencia</span> <span class="text-red-600">-$500.00</span></div>
+                                <div class="flex justify-between"><span>🛒 Venta #1244</span> <span>$112.75</span></div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span>Home</div>
+                            <div class="nav-item"><span>📊</span>Informes</div>
+                            <div class="nav-item"><span>👥</span>Clientes</div>
+                            <div class="nav-item"><span>≡</span>Más</div>
+                        </div>
+                    `
+                }
+            }
+        ];
+
+        // Variables globales
+        const archetypes = [...new Set(appData.map(app => app.archetype))];
+        let activeFilter = 'Todos';
+        let radarChart;
+        let selectedAppsForComparison = [];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilterButtons();
+            renderApps(appData);
+            renderComparatorSelector();
+            initRadarChart();
+            setupModal();
+            renderMockups();
+            document.getElementById('hypothesis-generator-button').addEventListener('click', generateHypotheses);
+        });
+
+        // Funciones de renderizado
+        function renderFilterButtons() {
+            const container = document.getElementById('filter-buttons');
+            container.innerHTML = '';
+            const allButton = createFilterButton('Todos');
+            container.appendChild(allButton);
+            archetypes.forEach(archetype => {
+                const button = createFilterButton(archetype);
+                container.appendChild(button);
+            });
+        }
+
+        function createFilterButton(text) {
+            const button = document.createElement('button');
+            button.textContent = text;
+            button.className = `px-4 py-2 text-sm font-semibold rounded-full border smooth-transition ${text === activeFilter ? 'active-filter' : 'inactive-filter'}`;
+            button.onclick = () => {
+                activeFilter = text;
+                const filteredData = text === 'Todos' ? appData : appData.filter(app => app.archetype === text);
+                renderApps(filteredData);
+                document.querySelectorAll('#filter-buttons button').forEach(btn => {
+                    btn.className = `px-4 py-2 text-sm font-semibold rounded-full border smooth-transition ${btn.textContent === activeFilter ? 'active-filter' : 'inactive-filter'}`;
+                });
+            };
+            return button;
+        }
+
+        function renderApps(data) {
+            const grid = document.getElementById('apps-grid');
+            grid.innerHTML = '';
+            data.sort((a, b) => a.rank - b.rank).forEach(app => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-2xl card-shadow smooth-transition cursor-pointer';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg font-bold text-[#3D5A80]">${app.name}</h3>
+                        ${app.rank > 0 ? `<span class="text-xs font-bold bg-[#E0F7FA] text-[#00796B] px-2 py-1 rounded-full">${app.rank}</span>` : ''}
+                    </div>
+                    <p class="text-sm text-gray-500 mb-2">${app.company}</p>
+                    <p class="text-sm text-gray-700 mb-4">${app.archetype}</p>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold text-gray-600">${app.market}</span>
+                        <span class="text-gray-500">${app.users}</span>
+                    </div>
+                `;
+                card.onclick = () => showDetails(app);
+                grid.appendChild(card);
+            });
+        }
+
+        function renderMockups() {
+            const grid = document.getElementById('mockups-grid');
+            grid.innerHTML = '';
+            appData.sort((a, b) => a.rank - b.rank).forEach(app => {
+                if (app.mockup) {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-6 rounded-2xl card-shadow flex flex-col';
+                    card.innerHTML = `
+                        <h3 class="text-xl font-bold text-[#3D5A80] mb-4">${app.mockup.title}</h3>
+                        <div class="mockup-container mb-4">
+                           ${app.mockup.visual}
+                        </div>
+                        <div class="mt-auto text-sm text-gray-700 leading-relaxed">
+                           <p>${app.mockup.analysis}</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        }
+
+        function renderComparatorSelector() {
+            const container = document.getElementById('comparator-selector');
+            const appsToCompare = appData.filter(app => app.strategyFocus).sort((a,b) => a.rank - b.rank);
+            appsToCompare.forEach(app => {
+                const button = document.createElement('button');
+                button.textContent = app.name;
+                button.dataset.appName = app.name;
+                button.className = `px-3 py-1.5 text-xs font-medium rounded-full border inactive-filter smooth-transition`;
+                container.appendChild(button);
+                button.onclick = () => toggleAppForComparison(app.name);
+            });
+        }
+        
+        function toggleAppForComparison(appName) {
+            const button = document.querySelector(`#comparator-selector button[data-app-name="${appName}"]`);
+            const hypothesisButton = document.getElementById('hypothesis-generator-button');
+            const index = selectedAppsForComparison.findIndex(app => app.name === appName);
+
+            if (index > -1) {
+                selectedAppsForComparison.splice(index, 1);
+                button.classList.remove('active-filter');
+                button.classList.add('inactive-filter');
+            } else {
+                if (selectedAppsForComparison.length < 3) {
+                    const app = appData.find(a => a.name === appName);
+                    selectedAppsForComparison.push(app);
+                    button.classList.add('active-filter');
+                    button.classList.remove('inactive-filter');
+                } else {
+                    alert("Podés comparar hasta 3 aplicaciones a la vez.");
+                }
+            }
+            
+            if (selectedAppsForComparison.length >= 2) {
+                hypothesisButton.disabled = false;
+            } else {
+                hypothesisButton.disabled = true;
+            }
+
+            updateRadarChart();
+        }
+
+        function initRadarChart() {
+            const ctx = document.getElementById('strategyRadarChart').getContext('2d');
+            const chartData = {
+                labels: ['Gestión de Ventas', 'Gestión de Saldo', 'Herramientas de Negocio', 'Operaciones Diarias', 'Acceso a Crédito'],
+                datasets: []
+            };
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += context.parsed.r;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        pointLabels: {
+                            font: {
+                                size: 12
+                            }
+                        },
+                        ticks: {
+                           stepSize: 1
+                        }
+                    }
+                }
+            };
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: chartData,
+                options: chartOptions
+            });
+        }
+
+        function updateRadarChart() {
+            const colors = [
+                { bg: 'rgba(61, 90, 128, 0.2)', border: 'rgba(61, 90, 128, 1)' },
+                { bg: 'rgba(233, 114, 76, 0.2)', border: 'rgba(233, 114, 76, 1)' },
+                { bg: 'rgba(29, 151, 108, 0.2)', border: 'rgba(29, 151, 108, 1)' }
+            ];
+
+            radarChart.data.datasets = selectedAppsForComparison.map((app, index) => {
+                const focus = app.strategyFocus;
+                return {
+                    label: app.name,
+                    data: [focus.sales, focus.balance, focus.tools, focus.operations, focus.credit],
+                    backgroundColor: colors[index].bg,
+                    borderColor: colors[index].border,
+                    borderWidth: 2,
+                    pointBackgroundColor: colors[index].border,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colors[index].border
+                };
+            });
+            radarChart.update();
+        }
+
+        function setupModal() {
+            const modal = document.getElementById('analysis-details');
+            const closeButton = document.getElementById('close-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+
+            closeButton.onclick = () => modal.classList.add('hidden');
+            backdrop.onclick = (e) => {
+                if (e.target === backdrop) {
+                    modal.classList.add('hidden');
+                }
+            };
+        }
+
+        function showDetails(app) {
+            const modal = document.getElementById('analysis-details');
+            const contentContainer = document.getElementById('details-content');
+            const geminiButton = document.getElementById('gemini-analysis-button');
+            const geminiOutput = document.getElementById('gemini-analysis-output');
+            
+            contentContainer.innerHTML = app.analysis;
+            geminiOutput.innerHTML = '';
+            
+            geminiButton.onclick = () => generateSwotAnalysis(app);
+            
+            modal.classList.remove('hidden');
+        }
+
+        async function callGeminiAPI(prompt) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }]
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la API: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    return "No se pudo obtener una respuesta de la IA. La estructura de la respuesta no es la esperada.";
+                }
+            } catch (error) {
+                console.error("Error al llamar a la API de Gemini:", error);
+                return `Error al conectar con el servicio de IA: ${error.message}`;
+            }
+        }
+
+        async function generateSwotAnalysis(app) {
+            const outputDiv = document.getElementById('gemini-analysis-output');
+            outputDiv.innerHTML = '<div class="loader"></div>';
+
+            const prompt = `
+                Como Product Expert analizando el mercado de aplicaciones para vendedores, realiza un análisis estratégico conciso de la aplicación "${app.name}".
+                
+                Información del competidor:
+                - Nombre: ${app.name}
+                - Arquetipo: ${app.archetype}
+                - Estrategia principal: ${app.analysis.match(/<strong>Estrategia:<\/strong>(.*?)<\/p>/s) ? app.analysis.match(/<strong>Estrategia:<\/strong>(.*?)<\/p>/s)[1].trim() : app.analysis.match(/<strong>Estrategia Actual:<\/strong>(.*?)<\/p>/s)[1].trim()}
+                - Foco de la Home UX: ${app.analysis.match(/<strong>UX de la Home:<\/strong>(.*?)<\/p>/s)[1].trim()}
+
+                Basado en esta información, genera lo siguiente en español y usando formato Markdown simple:
+                1. Un análisis SWOT (Fortalezas, Debilidades, Oportunidades, Amenazas).
+                2. Tres (3) acciones estratégicas concretas que Mercado Pago podría implementar para competir eficazmente contra ${app.name}. Si el competidor es Mercado Pago, analiza sus propias debilidades y sugiere acciones de mejora internas.
+            `;
+
+            const result = await callGeminiAPI(prompt);
+            const formattedResult = result
+                .replace(/#### (.*?)\n/g, '<h4>$1</h4>')
+                .replace(/\* \*\*(.*?)\*\*/g, '<li><strong>$1</strong>')
+                .replace(/\* (.*?)\n/g, '<li>$1</li>')
+                .replace(/(\<\/li\>)/g, '$1\n')
+                .replace(/\n\n/g, '<br>')
+                .replace(/\n/g, '')
+                 .replace(/<\/li><\/li>/g, '</li>');
+
+            outputDiv.innerHTML = `<div class="gemini-output p-4 bg-gray-50 rounded-lg">${formattedResult}</div>`;
+        }
+
+        async function generateHypotheses() {
+            if (selectedAppsForComparison.length < 2) return;
+
+            const outputDiv = document.getElementById('hypothesis-output');
+            outputDiv.innerHTML = '<div class="loader"></div>';
+
+            const competitorInfo = selectedAppsForComparison.map(app => 
+                `Competidor: ${app.name} (Arquetipo: ${app.archetype}). Foco principal de la home: ${app.analysis.match(/<strong>UX de la Home:<\/strong>(.*?)<\/p>/s)[1].trim()}`
+            ).join('\n');
+
+            const prompt = `
+                Como experto en UX Research y Producto, analiza las siguientes estrategias de home de competidores:
+                ${competitorInfo}
+
+                Basado en el contraste de estas estrategias, genera 3 hipótesis de prueba A/B para una nueva home de una aplicación para vendedores (como la de Mercado Pago). Cada hipótesis debe ser clara, medible y accionable. Responde en español y usa formato Markdown simple.
+            `;
+            
+            const result = await callGeminiAPI(prompt);
+            const formattedResult = result
+                .replace(/#### (.*?)\n/g, '<h4>$1</h4>')
+                .replace(/\* \*\*(.*?)\*\*/g, '<li><strong>$1</strong>')
+                .replace(/\* (.*?)\n/g, '<li>$1</li>')
+                 .replace(/(\<\/li\>)/g, '$1\n')
+                .replace(/\n\n/g, '<br>')
+                .replace(/\n/g, '')
+                .replace(/<\/li><\/li>/g, '</li>');
+
+            outputDiv.innerHTML = `<div class="gemini-output p-4 bg-gray-50 rounded-lg">${formattedResult}</div>`;
+        }
+    </script>
+</body>
+</html>
