@@ -9,11 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Arena y Cobalto -->
+    <!-- Application Structure Plan: He diseñado una SPA con una estructura de home interactiva. El plan se centra en cuatro pilares: 1) Un "Explorador de Competidores" que permite filtrar y ver detalles de las apps clave, incluyendo a Mercado Pago. 2) Un "Comparador de Paradigmas de Home", la pieza central, que utiliza un gráfico de radar dinámico para visualizar y comparar las estrategias de UX. 3) Una "Galería de Mockups" de alta fidelidad para comparar la arquitectura visual. 4) Funcionalidades de IA para generar análisis estratégicos e hipótesis de UX. Esta estructura transforma la lectura pasiva en una exploración activa, permitiendo al usuario comparar arquetipos y estrategias de forma visual e instantánea. -->
+    <!-- Visualization & Content Choices: 1) Tabla Top 20 -> Explorador de Tarjetas Interactivas (HTML/JS) para filtrado y selección. 2) Paradigmas de Home -> Gráfico de Radar Dinámico (Chart.js/Canvas) para comparar el foco estratégico (Ventas, Saldo, Operaciones, etc.). 3) Mockups de Experiencia -> Representaciones visuales en alta fidelidad (HTML/CSS) para mostrar la jerarquía de la información. 4) Análisis de UX -> Bloques de texto modales/expandibles (HTML/JS). Se evita el SVG/Mermaid en favor de Canvas y HTML/CSS estructurado. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #383A3F;
+            background-color: #FDFBF8; /* Arena muy claro */
+            color: #383A3F; /* Gris oscuro */
         }
         .chart-container {
             position: relative;
@@ -30,7 +34,7 @@
             }
         }
         .active-filter, .gemini-button {
-            background-color: #3D5A80;
+            background-color: #3D5A80; /* Cobalto */
             color: #FFFFFF;
             border-color: #3D5A80;
         }
@@ -139,11 +143,14 @@
     </style>
 </head>
 <body class="antialiased">
+
     <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-[#3D5A80] mb-2">Análisis Interactivo de Apps para Vendedores con IA</h1>
             <p class="text-lg text-gray-600">Una deconstrucción de las estrategias de UX y producto en el ecosistema global, potenciada por Gemini.</p>
         </header>
+
         <main>
             <section id="intro" class="mb-16 bg-white p-8 rounded-2xl card-shadow">
                 <h2 class="text-2xl font-bold text-[#3D5A80] mb-4">El Desafío: Transformar la Experiencia del Vendedor</h2>
@@ -201,15 +208,16 @@
                     </div>
                 </div>
             </section>
+
         </main>
 
         <footer class="text-center mt-16 text-gray-500 text-sm">
             <p>Generado a partir del "Análisis UX: Apps Vendedor Globales" y "Análisis Visual de las Top 20 Apps para Vendedores". Potenciado por Gemini.</p>
         </footer>
+
     </div>
 
     <script>
-        // Datos de las aplicaciones
         const appData = [
             {
                 rank: 0,
@@ -230,6 +238,7 @@
                     analysis: `<strong>Foco Estratégico:</strong> La experiencia está dividida. La <strong>Home Principal (izquierda)</strong> se centra en el <code>Saldo</code> y productos financieros, mientras que la <strong>Home de Negocio (derecha)</strong> se enfoca en herramientas de <code>Cobro</code> y gestión. Esta separación visual y funcional es el principal punto de fricción y la mayor oportunidad de rediseño.`,
                     visual: `
                         <div class="mockup-body !pt-0 flex-row gap-2">
+                            <!-- Columna Izquierda: Home Principal -->
                             <div class="w-1/2 flex flex-col border-r pr-2">
                                 <div class="mockup-header !border-none">
                                     <div class="font-semibold text-gray-800"><span>▫️</span> Olá, Adidas</div>
@@ -253,6 +262,7 @@
                                     Sistema de gestão para transformar seu negócio
                                 </div>
                             </div>
+                            <!-- Columna Derecha: Home de Negocio -->
                             <div class="w-1/2 flex flex-col pl-2">
                                 <div class="mockup-header !border-none">
                                     <div class="font-semibold text-gray-800">Seu negócio</div>
@@ -335,16 +345,474 @@
                         </div>
                     `
                 }
+            },
+            {
+                rank: 2,
+                name: "PayPal Business",
+                company: "PayPal",
+                market: "Global",
+                users: "36M comerciantes",
+                archetype: "Super-App de Pagos",
+                strategyFocus: { sales: 3, balance: 5, tools: 4, operations: 2, credit: 3 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">PayPal: El Centro de Acción</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Capitaliza su enorme red para evolucionar de un botón de pago a una plataforma de gestión. El foco es la acción y el movimiento de dinero con mínima fricción.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> El héroe de la pantalla es el <strong>saldo disponible</strong>. Las acciones principales son botones grandes y claros para mover dinero ("Transferir", "Solicitar"). La facturación es un punto de entrada clave. El foco es la gestión transaccional.</p>
+                    <p><strong>Productos de Valor (Cuenta):</strong> El saldo de PayPal *es* la wallet. La <code>PayPal Business Debit Card</code> es crucial, ya que conecta el saldo digital con el mundo físico de forma instantánea, cerrando el ciclo del dinero.</p>
+                `,
+                mockup: {
+                    title: "PayPal: El Centro de Acción Transaccional",
+                    analysis: `<strong>Foco Estratégico:</strong> El héroe de la pantalla es el <code>Saldo</code> disponible. Las acciones principales son botones grandes y claros para mover dinero (<code>Transferir</code>, <code>Solicitar</code>). La facturación es un punto de entrada clave. El foco es la gestión transaccional, no el análisis de ventas.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800"><span>🅿️</span> PayPal Business</div>
+                            <div class="text-gray-600">[Icono QR]</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500">Saldo de PayPal</div>
+                                <div class="text-3xl font-bold text-gray-800">$2,840.15</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button class="w-full p-3 bg-blue-500 text-white rounded-lg font-semibold">↑ Transferir</button>
+                                <button class="w-full p-3 bg-blue-500 text-white rounded-lg font-semibold">+ Solicitar</button>
+                            </div>
+                            <button class="w-full p-3 bg-white border rounded-lg font-semibold text-gray-700">📄 Crear y gestionar facturas</button>
+                             <div class="text-xs font-semibold text-gray-500">Actividad Reciente</div>
+                            <div class="text-xs space-y-2 text-gray-800">
+                                <div class="flex justify-between"><span>📥 Pago Recibido</span> <span>$200.00</span></div>
+                                <div class="flex justify-between"><span>📤 Retiro a Banco</span> <span class="text-red-600">-$1000.00</span></div>
+                                <div class="flex justify-between"><span>💸 Pago a Proveedor</span> <span class="text-red-600">-$150.00</span></div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span>Home</div>
+                            <div class="nav-item"><span>⇆</span>Pagos</div>
+                            <div class="nav-item"><span>👤</span>Contactos</div>
+                            <div class="nav-item"><span>≡</span>Más</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 3,
+                name: "Shopify POS",
+                company: "Shopify",
+                market: "Global",
+                users: "~2.5-4.8M tiendas",
+                archetype: "Campeón Omnicanal",
+                strategyFocus: { sales: 4, balance: 2, tools: 5, operations: 5, credit: 3 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Shopify: La Estación de Venta</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Integración perfecta del comercio electrónico y la venta física. La filosofía es "el comercio primero, las finanzas como soporte".</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> Es una herramienta de trabajo. La interfaz está dominada por la <strong>cuadrícula de productos y el carrito de compras</strong>. El objetivo es la velocidad y la eficiencia en el punto de venta. La notificación de "pedido online listo para retirar" resalta su naturaleza omnicanal.</p>
+                    <p><strong>Productos de Valor (Cuenta y Capital):</strong> <code>Shopify Balance</code> y <code>Shopify Capital</code> están integrados, pero no son el foco de la interfaz de venta. Se presentan como soluciones a los problemas que surgen del comercio, como financiar la compra de inventario.</p>
+                `,
+                mockup: {
+                    title: "Shopify POS: La Estación de Venta Omnicanal",
+                    analysis: `<strong>Foco Estratégico:</strong> La pantalla es una herramienta de trabajo. La <code>Cuadrícula de Productos</code> y el <code>Carrito</code> dominan la interfaz. El objetivo es la velocidad y la eficiencia en el punto de venta. La notificación de pedido online resalta su naturaleza omnicanal. Las finanzas están subordinadas a la operación comercial.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800">🔍 Buscar productos...</div>
+                            <div class="text-gray-600">[Menú]</div>
+                        </div>
+                        <div class="mockup-body flex-row gap-2">
+                            <div class="w-2/3 grid grid-cols-3 gap-1.5 text-gray-800">
+                                <div class="bg-white rounded-md aspect-square flex items-center justify-center text-center p-1">Prod A</div>
+                                <div class="bg-white rounded-md aspect-square flex items-center justify-center text-center p-1">Prod B</div>
+                                <div class="bg-white rounded-md aspect-square flex items-center justify-center text-center p-1">Prod C</div>
+                                <div class="bg-white rounded-md aspect-square flex items-center justify-center text-center p-1">Prod D</div>
+                                <div class="bg-gray-200 rounded-md aspect-square flex items-center justify-center text-center p-1">% Dto</div>
+                                <div class="bg-gray-200 rounded-md aspect-square flex items-center justify-center text-center p-1">👤 Cliente</div>
+                            </div>
+                            <div class="w-1/3 bg-white rounded-lg p-2 flex flex-col text-gray-800">
+                                <div class="font-bold">Carrito (2)</div>
+                                <div class="text-xs mt-1 flex-grow">
+                                    <div>Prod A ... $25.00</div>
+                                    <div>Prod B ... $40.00</div>
+                                </div>
+                                <div class="text-xs border-t pt-1">Total: <strong>$65.00</strong></div>
+                                <button class="w-full p-2 mt-2 bg-green-500 text-white rounded-md font-bold">COBRAR</button>
+                            </div>
+                        </div>
+                         <div class="mockup-footer !border-none !pt-0">
+                            <div class="w-full text-center bg-blue-100 text-blue-800 p-2 rounded-lg text-xs">🔔 Pedido Online #5821 listo para retirar</div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🛒</span>Venta</div>
+                            <div class="nav-item"><span>📦</span>Pedidos</div>
+                            <div class="nav-item"><span>📈</span>Informes</div>
+                            <div class="nav-item"><span>≡</span>Más</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 4,
+                name: "Revolut Business",
+                company: "Revolut Ltd.",
+                market: "Europa, Global",
+                users: "500k+ negocios",
+                archetype: "Neobanco Global",
+                strategyFocus: { sales: 1, balance: 5, tools: 4, operations: 3, credit: 2 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Revolut: El Cockpit Financiero</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Se dirige a empresas modernas y globales con un enfoque de "finanzas primero". Es un banco que ha añadido adquirencia, no al revés.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> Es un "cockpit financiero". La información más prominente es el <strong>desglose de saldos en múltiples divisas</strong>. Las acciones clave son "Cambiar" y "Enviar". Está diseñado para la gestión de tesorería, no para la venta del día a día.</p>
+                    <p><strong>Productos de Valor (Tarjetas):</strong> La gestión de tarjetas (físicas y virtuales) con límites de gasto es una funcionalidad estrella, ofreciendo un control granular inigualable, ideal para equipos y suscripciones.</p>
+                `,
+                mockup: {
+                    title: "Revolut: El Cockpit Financiero Global",
+                    analysis: `<strong>Foco Estratégico:</strong> La home es un centro de control de tesorería. La vista principal es una lista de <code>Saldos por divisa</code>. Las acciones clave son <code>Cambiar</code> y <code>Enviar</code>, reflejando su fortaleza en FX y transferencias internacionales. Está diseñado para la gestión financiera, no para la venta.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800">Cuentas</div>
+                            <div class="text-xs font-semibold text-blue-600">+ Añadir Dinero</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="space-y-2 text-gray-800">
+                                <div class="p-2 bg-white rounded-lg">
+                                    <div class="text-xs">🇦🇷 Pesos Argentinos</div>
+                                    <div class="font-bold">ARS 250,000.00</div>
+                                </div>
+                                 <div class="p-2 bg-white rounded-lg">
+                                    <div class="text-xs">🇺🇸 Dólares Estadounidenses</div>
+                                    <div class="font-bold">USD 10,500.00</div>
+                                </div>
+                                <div class="p-2 bg-white rounded-lg">
+                                    <div class="text-xs">🇪🇺 Euros</div>
+                                    <div class="font-bold">EUR 8,200.00</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                <button class="w-full p-2 bg-gray-200 rounded-lg font-semibold text-gray-800">⇆ Cambiar</button>
+                                <button class="w-full p-2 bg-gray-800 text-white rounded-lg font-semibold">→ Enviar</button>
+                            </div>
+                            <div class="text-xs font-semibold text-gray-500 mt-2">Próximos Pagos</div>
+                            <div class="text-xs text-gray-800">Suscripción a SaaS ... -€49.99 (25 Jul)</div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span>Home</div>
+                            <div class="nav-item"><span>💳</span>Tarjetas</div>
+                            <div class="nav-item"><span>↑↓</span>Pagos</div>
+                            <div class="nav-item"><span>⚙️</span>Hub</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 5,
+                name: "Nubank PJ",
+                company: "Nu Holdings",
+                market: "Brasil, LatAm",
+                users: "4M+ clientes PJ",
+                archetype: "Neobanco Revolucionario",
+                strategyFocus: { sales: 2, balance: 5, tools: 3, operations: 2, credit: 4 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Nubank PJ: Simplicidad Radical</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Extender su aclamada simplicidad al mundo empresarial, eliminando toda fricción y burocracia.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La simplicidad es la clave. Un <strong>saldo grande y claro</strong>, seguido de un carrusel de las acciones más comunes ("Área Pix", "Cobrar"). El punto de partida es el estado de la cuenta, con el cobro como una capacidad fundamental.</p>
+                    <p><strong>Productos de Valor (Crédito):</strong> El acceso a "Empréstimo" (préstamo) y la tarjeta de crédito tienen <strong>visibilidad fija y permanente</strong> en la home, una estrategia directa para aumentar el awareness y la adopción.</p>
+                `,
+                 mockup: {
+                    title: "Nubank PJ: La Simplicidad Radical",
+                    analysis: `<strong>Foco Estratégico:</strong> La simplicidad es la clave. Un <code>Saldo</code> grande y claro, seguido de un carrusel de las acciones más comunes (<code>Área Pix</code>, <code>Cobrar</code>). Los productos de valor como <code>Cartão</code> y <code>Empréstimo</code> (Crédito) tienen visibilidad fija y permanente en la home, alineándose con los objetivos del proyecto de aumentar el *awareness*.`,
+                    visual: `
+                        <div class="mockup-header !border-none text-purple-700">
+                            <div class="font-semibold text-lg">N</div>
+                            <div class="text-xs">Olá, Negocio... 👁️</div>
+                        </div>
+                        <div class="mockup-body !pt-0">
+                            <div class="text-xs text-gray-600">Saldo disponible en Conta PJ</div>
+                            <div class="text-2xl font-bold text-gray-800">R$ 18.450,20</div>
+                            <div class="flex space-x-3 overflow-x-auto pb-2 -mx-1 px-1 text-gray-700">
+                                <div class="text-center text-xs"><div class="bg-gray-200 rounded-full w-12 h-12 mb-1"></div>Pix</div>
+                                <div class="text-center text-xs"><div class="bg-gray-200 rounded-full w-12 h-12 mb-1"></div>Cobrar</div>
+                                <div class="text-center text-xs"><div class="bg-gray-200 rounded-full w-12 h-12 mb-1"></div>Transferir</div>
+                                <div class="text-center text-xs"><div class="bg-gray-200 rounded-full w-12 h-12 mb-1"></div>Depositar</div>
+                            </div>
+                             <div class="p-3 bg-white rounded-lg border text-gray-800">
+                                <div class="font-bold">💳 Cartão de Crédito PJ</div>
+                                <div class="text-xs mt-1">Factura actual: R$ 3.120,00</div>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg border text-gray-800">
+                                <div class="font-bold">💰 Empréstimo para seu negócio</div>
+                                <div class="text-xs mt-1 text-purple-700 font-semibold">Você tem um limite pré-aprovado. Simular →</div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-purple-700"><span>🏠</span>Início</div>
+                            <div class="nav-item"><span>💳</span>Cartões</div>
+                            <div class="nav-item"><span>💰</span>Conta</div>
+                            <div class="nav-item"><span>🛒</span>Shopping</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 6,
+                name: "Stone",
+                company: "StoneCo Ltd.",
+                market: "Brasil",
+                users: "4.2M clientes",
+                archetype: "Adquirencia y Banca Integrada",
+                strategyFocus: { sales: 4, balance: 4, tools: 4, operations: 3, credit: 4 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">Stone: La Solución "Todo en Uno"</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Posicionarse como una solución integral que combina hardware (la "maquininha") con una cuenta PJ y gestión, todo en una sola app. Un diferenciador clave es la red de "Agentes Stone" que ofrecen soporte presencial, creando una fuerte percepción de cercanía y confianza.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> El diseño busca unificar la visión de ventas con la gestión de la cuenta. Presenta un resumen de "Vendas", el "Saldo disponível" y accesos directos a productos clave como crédito, validando el enfoque de unificar banking y adquirencia en una sola vista.</p>
+                `,
+                 mockup: {
+                    title: "Stone: Adquirencia y Banca Integrada",
+                    analysis: `<strong>Foco Estratégico:</strong> La home busca un equilibrio entre la visión de <code>Ventas</code> y el <code>Saldo disponível</code>. La visibilidad permanente de <code>Crédito</code> y el acceso a un <code>Asesor</code> humano son diferenciadores clave en su UX, proyectando una imagen de partner estratégico.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800"><span>💎</span> Stone</div>
+                            <div class="text-xs text-gray-600">Precisa de ajuda?</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="grid grid-cols-2 gap-2 text-center text-gray-800">
+                                <div class="p-2 bg-white rounded-lg border">
+                                    <div class="text-xs text-gray-500">Saldo disponível</div>
+                                    <div class="font-bold">R$ 12.830</div>
+                                </div>
+                                <div class="p-2 bg-white rounded-lg border">
+                                    <div class="text-xs text-gray-500">Vendas hoje</div>
+                                    <div class="font-bold">R$ 2.150</div>
+                                </div>
+                            </div>
+                            <div class="text-xs font-semibold text-gray-500">Ações rápidas</div>
+                            <div class="grid grid-cols-4 gap-2 text-center text-xs text-gray-700">
+                                <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Pagar</div>
+                                <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Cobrar</div>
+                                <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Cartões</div>
+                                <div><div class="bg-gray-200 rounded-lg h-10 mb-1"></div>Taxas</div>
+                            </div>
+                            <div class="p-3 bg-green-50 border border-green-200 rounded-lg text-center">
+                                <div class="font-bold text-green-800">Crédito para o seu negócio</div>
+                                <p class="text-xs text-green-700 mt-1">Temos uma oferta de R$ 25.000 para você.</p>
+                            </div>
+                             <div class="p-2 bg-white rounded-lg border flex items-center justify-between text-gray-800">
+                                <span class="text-xs">Fale com seu assessor Stone</span>
+                                <button class="bg-green-500 text-white text-xs px-2 py-1 rounded">Contato</button>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span>Início</div>
+                            <div class="nav-item"><span>📈</span>Vendas</div>
+                            <div class="nav-item"><span>📄</span>Extrato</div>
+                            <div class="nav-item"><span>≡</span>Mais</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 7,
+                name: "PagBank / PagVendas",
+                company: "PagSeguro Digital Ltd.",
+                market: "Brasil",
+                users: "6.4M comerciantes",
+                archetype: "Ecosistema Financiero y de Gestión",
+                strategyFocus: { sales: 5, balance: 3, tools: 5, operations: 4, credit: 3 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">PagBank / PagVendas: El Ecosistema Dual</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> PagSeguro ataca el mercado con una estrategia de dos aplicaciones: <strong>PagBank</strong>, la cuenta digital financiera, y <strong>PagVendas</strong>, la app de gestión y punto de venta. El gran diferenciador de PagBank es que el saldo en cuenta rinde automáticamente. PagVendas, por otro lado, se enfoca en transformar el celular en una herramienta completa de gestión (control de inventario, reportes, etc.).</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La experiencia está segmentada. La home de PagBank se centra en el <strong>saldo que rinde</strong> y las transacciones financieras. La home de PagVendas, en cambio, es un <strong>centro de operaciones</strong>, priorizando el "Total vendido no dia" y el botón de "Iniciar venda". Esta separación permite tener experiencias muy enfocadas para cada necesidad, aunque puede generar fricción al tener que cambiar de app.</p>
+                `,
+                 mockup: {
+                    title: "PagVendas: El Centro de Operaciones",
+                    analysis: `<strong>Foco Estratégico:</strong> La home de PagVendas es puramente operacional. Prioriza el <code>Total vendido no dia</code> y un CTA claro para <code>Iniciar venda</code>. Las <code>Herramientas de Gestión</code> (productos, reportes, caja) son el corazón de la app, posicionándola como un software de gestión de negocio (SGN) simplificado.`,
+                    visual: `
+                        <div class="mockup-header" style="background-color: #ffc800;">
+                            <div class="font-semibold text-gray-800"><span>🅿️</span> PagVendas</div>
+                            <div class="text-gray-600">🔔 👤</div>
+                        </div>
+                        <div class="mockup-body !pt-0">
+                            <div class="p-4 text-center" style="background-color: #ffc800;">
+                                <div class="text-xs text-gray-700">Total vendido no dia</div>
+                                <div class="font-bold text-2xl text-gray-900">R$ 1.234,56</div>
+                                <button class="w-full p-3 mt-3 bg-teal-500 text-white rounded-lg font-bold">Iniciar venda</button>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg border mx-2 -mt-4 relative shadow-md">
+                                <p class="text-xs text-gray-700"><strong>Taxa 0 só esse mês!</strong> E até 86% de desconto na sua maquininha.</p>
+                            </div>
+                            <div class="px-2 space-y-3 mt-2 text-gray-800">
+                                <div class="flex justify-between items-center"><span><strong>Cadastro de produtos</strong><br><span class="text-xs text-gray-500">Controle do seu estoque</span></span><span class="text-lg">›</span></div>
+                                <div class="flex justify-between items-center"><span><strong>Relatório de vendas</strong><br><span class="text-xs text-gray-500">Acesse seus relatórios</span></span><span class="text-lg">›</span></div>
+                                <div class="flex justify-between items-center"><span><strong>Controle de caixa</strong><br><span class="text-xs text-gray-500">Acesse seu controle de caixa</span></span><span class="text-lg">›</span></div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-teal-600"><span>🏠</span>Início</div>
+                            <div class="nav-item"><span>💲</span>Vender</div>
+                            <div class="nav-item"><span>📊</span>Gerenciar</div>
+                            <div class="nav-item"><span>🛒</span>Vendas online</div>
+                            <div class="nav-item"><span>⚙️</span>Serviços</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 8,
+                name: "GrabMerchant",
+                company: "Grab",
+                market: "Sudeste Asiático",
+                users: "Ecosistema 43.9M MTU",
+                archetype: "Super-App de Ecosistema",
+                strategyFocus: { sales: 4, balance: 3, tools: 4, operations: 5, credit: 2 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">GrabMerchant: Centro de Operaciones</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> La app es la puerta de entrada a un ecosistema masivo de delivery y logística. Los servicios financieros están profundamente integrados en el flujo operativo.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La prioridad absoluta es la operación. El feed de <strong>nuevos pedidos</strong> domina la pantalla y exige acción inmediata. Las métricas son operativas (ventas, ratings, tiempo de espera).</p>
+                    <p><strong>Productos de Valor (Finanzas):</strong> La pestaña "Finanzas" existe, pero está subordinada a la gestión de "Pedidos" y "Marketing", que son los motores del negocio en este ecosistema.</p>
+                `,
+                mockup: {
+                    title: "GrabMerchant: El Centro de Operaciones",
+                    analysis: `<strong>Foco Estratégico:</strong> La prioridad absoluta es la operación. El feed de <code>Nuevos Pedidos</code> domina la pantalla y exige acción inmediata. Las métricas son operativas (ventas, ratings). La pestaña <code>Finanzas</code> existe, pero está subordinada a la gestión de <code>Pedidos</code> y <code>Marketing</code>, que son los motores del negocio en este ecosistema.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800">Mi Tienda</div>
+                            <div class="text-xs font-semibold text-green-600">🟢 Abierta</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="text-red-600 font-bold">NUEVOS PEDIDOS (2) - ¡ACCIÓN!</div>
+                            <div class="p-3 bg-white rounded-lg border border-red-500 text-gray-800">
+                                <div class="flex justify-between items-center">
+                                    <span>Pedido #G-5829 (2 items)</span>
+                                    <button class="bg-red-500 text-white text-xs px-2 py-1 rounded">Aceptar (60s)</button>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg border border-red-500 text-gray-800">
+                                <div class="flex justify-between items-center">
+                                    <span>Pedido #G-5828 (1 item)</span>
+                                    <button class="bg-red-500 text-white text-xs px-2 py-1 rounded">Aceptar (45s)</button>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-gray-100 rounded-lg text-xs grid grid-cols-3 text-center text-gray-800">
+                                <div><div class="font-bold">$350</div>Ventas</div>
+                                <div><div class="font-bold">25</div>Pedidos</div>
+                                <div><div class="font-bold">4.8⭐</div>Rating</div>
+                            </div>
+                            <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                                <div class="font-bold text-blue-800">📢 MARKETING</div>
+                                <p class="text-xs text-blue-700 mt-1">Crea una promoción para atraer más clientes.</p>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>📝</span>Pedidos</div>
+                            <div class="nav-item"><span>💰</span>Finanzas</div>
+                            <div class="nav-item"><span>🍽️</span>Menú</div>
+                            <div class="nav-item"><span>📊</span>Marketing</div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 9,
+                name: "GoBiz (Gojek)",
+                company: "GoTo Group",
+                market: "Indonesia, SEA",
+                users: "20.1M+ comerciantes",
+                archetype: "Super-App de Ecosistema",
+                strategyFocus: { sales: 3, balance: 2, tools: 4, operations: 5, credit: 2 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">GoBiz: La Super-App Operativa</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> Similar a Grab, GoBiz es la super-app para que las empresas gestionen su presencia en el ecosistema Gojek, principalmente GoFood. La UX gira en torno a la gestión de las operaciones comerciales del día a día.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La interfaz está optimizada para la eficiencia en la gestión de un alto volumen de pedidos. El estado operativo (tienda abierta/cerrada) y el flujo de aceptación de pedidos son los elementos centrales de la experiencia.</p>
+                `,
+                mockup: {
+                    title: "GoBiz: La Super-App Operativa",
+                    analysis: `<strong>Foco Estratégico:</strong> Al igual que Grab, la home es un centro de <code>Operaciones</code>. La gestión de <code>Pedidos</code> de GoFood y el estado de la tienda son las prioridades absolutas. La UX está diseñada para la velocidad y la eficiencia en un entorno de alto volumen de transacciones.`,
+                    visual: `
+                        <div class="mockup-header">
+                             <div class="font-semibold text-gray-800">GoBiz</div>
+                            <div class="text-xs text-gray-600">Tokoku Buka 🟢</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="p-4 bg-white rounded-lg border text-center text-gray-800">
+                                <div class="text-xs text-gray-500">Pesanan baru</div>
+                                <div class="font-bold text-2xl text-red-600">3</div>
+                                <div class="text-xs text-gray-500">Perlu konfirmasi</div>
+                            </div>
+                            <div class="text-xs font-semibold text-gray-500">Ringkasan hari ini</div>
+                             <div class="p-3 bg-gray-100 rounded-lg text-xs grid grid-cols-3 text-center text-gray-800">
+                                <div><div class="font-bold">Rp 4.5M</div>Penjualan</div>
+                                <div><div class="font-bold">150</div>Pesanan</div>
+                                <div><div class="font-bold">4.9⭐</div>Rating</div>
+                            </div>
+                             <div class="p-3 bg-white rounded-lg border text-gray-800">
+                                <div class="font-bold">Atur Promo</div>
+                                <p class="text-xs text-gray-600 mt-1">Tarik lebih banyak pelanggan dengan diskon.</p>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span>Home</div>
+                            <div class="nav-item"><span>📝</span>Pesanan</div>
+                            <div class="nav-item"><span>💬</span>Chat</div>
+                            <div class="nav-item"><span> Lainnya</span></div>
+                        </div>
+                    `
+                }
+            },
+            {
+                rank: 10,
+                name: "InfinitePay",
+                company: "CloudWalk",
+                market: "Brasil",
+                users: "1M+ clientes",
+                archetype: "Neobanco con IA",
+                strategyFocus: { sales: 3, balance: 5, tools: 4, operations: 3, credit: 3 },
+                analysis: `
+                    <h3 class="text-2xl font-bold text-[#3D5A80] mb-4">InfinitePay: El Neobanco con IA</h3>
+                    <p class="mb-4"><strong>Estrategia:</strong> InfinitePay presenta un modelo híbrido y tecnológicamente avanzado. Comienza con una experiencia de "neobanco" tradicional, centrada en el saldo, pero rápidamente introduce un asistente de IA ("JIM") como un pilar fundamental de la experiencia para educación y soporte.</p>
+                    <p class="mb-4"><strong>UX de la Home:</strong> La home principal se centra en el <strong>saldo disponible</strong> y acciones financieras rápidas. Sin embargo, da una visibilidad muy alta a su asistente de IA y a métodos de cobro de baja fricción como "Tap to Pay". Las herramientas de gestión del negocio están organizadas en una lista clara, separando el "negocio" del "banco" en un mismo scroll, buscando una integración más fluida que las experiencias totalmente bifurcadas.</p>
+                `,
+                mockup: {
+                    title: "InfinitePay: El Neobanco con IA",
+                    analysis: `<strong>Foco Estratégico:</strong> La home combina un foco en el <code>Saldo</code> con una apuesta muy fuerte por la <strong>Inteligencia Artificial (<code>JIM</code>)</strong> como diferenciador. Las herramientas de <code>Seu negócio</code> están bien organizadas y accesibles, pero la jerarquía visual prioriza la cuenta digital y la interacción con el asistente de IA.`,
+                    visual: `
+                        <div class="mockup-header">
+                            <div class="font-semibold text-gray-800"><span>$</span>sandy_de_miranda...</div>
+                            <div class="text-gray-600">👁️ 🔔 👤</div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="text-2xl font-bold text-gray-900">R$ 11,53</div>
+                            <div class="grid grid-cols-5 gap-2 text-center text-xs text-gray-700">
+                                <div><div class="bg-gray-200 rounded-full h-10 mb-1"></div>Pix</div>
+                                <div><div class="bg-gray-200 rounded-full h-10 mb-1"></div>Transferir</div>
+                                <div><div class="bg-gray-200 rounded-full h-10 mb-1"></div>Pagar</div>
+                                <div><div class="bg-gray-200 rounded-full h-10 mb-1"></div>Depositar</div>
+                                <div><div class="bg-gray-200 rounded-full h-10 mb-1"></div>Cartões</div>
+                            </div>
+                            <button class="w-full p-3 bg-purple-600 text-white rounded-lg font-bold">Fale com o JIM ✨</button>
+                            <div class="p-3 bg-gray-800 text-white rounded-lg text-center">
+                                Tap to Pay no iPhone <br>
+                                <span class="text-xs">Começar a usar</span>
+                            </div>
+                            <div class="text-sm font-bold mt-2 text-gray-800">Seu negócio</div>
+                            <div class="text-xs space-y-2 text-gray-700">
+                                <div class="flex justify-between items-center"><span>Redução de taxas <span class="bg-green-200 text-green-800 text-xxs font-bold px-1 rounded">Novo</span></span><span>›</span></div>
+                                <div class="flex justify-between items-center"><span>Suas vendas</span><span>›</span></div>
+                                <div class="flex justify-between items-center"><span>Gestão de Cobrança</span><span>›</span></div>
+                            </div>
+                        </div>
+                        <div class="mockup-footer">
+                            <div class="nav-item text-blue-600"><span>🏠</span></div>
+                            <div class="nav-item"><span>📠</span></div>
+                            <div class="nav-item text-green-500 text-2xl -mt-4 border-4 border-white rounded-full bg-black"><span>⚫</span></div>
+                            <div class="nav-item"><span>🎛️</span></div>
+                            <div class="nav-item"><span>⚙️</span></div>
+                        </div>
+                    `
+                }
             }
         ];
 
-        // Variables globales
         const archetypes = [...new Set(appData.map(app => app.archetype))];
         let activeFilter = 'Todos';
         let radarChart;
         let selectedAppsForComparison = [];
 
-        // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             renderFilterButtons();
             renderApps(appData);
@@ -355,7 +823,6 @@
             document.getElementById('hypothesis-generator-button').addEventListener('click', generateHypotheses);
         });
 
-        // Funciones de renderizado
         function renderFilterButtons() {
             const container = document.getElementById('filter-buttons');
             container.innerHTML = '';
@@ -667,6 +1134,8 @@
 
             outputDiv.innerHTML = `<div class="gemini-output p-4 bg-gray-50 rounded-lg">${formattedResult}</div>`;
         }
+
     </script>
+
 </body>
 </html>
