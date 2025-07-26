@@ -6,17 +6,6 @@
     <title>Análisis Interactivo de Apps para Vendedores con IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Verificar que Chart.js se cargue correctamente
-        window.addEventListener('load', function() {
-            if (typeof Chart === 'undefined') {
-                console.error('Chart.js no se cargó correctamente');
-                document.body.innerHTML += '<div style="color: red; padding: 20px; text-align: center;">Error: Chart.js no se cargó. Por favor, recarga la página.</div>';
-            } else {
-                console.log('Chart.js cargado correctamente');
-            }
-        });
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -182,8 +171,7 @@
                         <canvas id="strategyRadarChart"></canvas>
                     </div>
                     <div class="mt-8 text-center">
-                        <button id="hypothesis-generator-button" class="gemini-button px-6 py-3 font-semibold rounded-full smooth-transition" disabled>✨ Generar Hipótesis de UX</button>
-                        <p class="text-xs text-gray-500 mt-2">Análisis basado en datos predefinidos de expertos en UX</p>
+                        <button id="hypothesis-generator-button" class="gemini-button px-6 py-3 font-semibold rounded-full smooth-transition" disabled>✨ Generar Hipótesis de UX con IA</button>
                         <div id="hypothesis-output" class="mt-6 text-left max-w-2xl mx-auto"></div>
                     </div>
                 </div>
@@ -213,9 +201,8 @@
                         <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
                         <div id="details-content"></div>
                         <div class="mt-8 border-t pt-6">
-                            <h3 class="text-xl font-bold text-[#3D5A80] mb-4">Análisis Estratégico</h3>
-                             <button id="gemini-analysis-button" class="gemini-button px-5 py-2.5 text-sm font-semibold rounded-full smooth-transition">✨ Analizar Competidor</button>
-                             <p class="text-xs text-gray-500 mt-1">Análisis basado en datos predefinidos de expertos en producto</p>
+                            <h3 class="text-xl font-bold text-[#3D5A80] mb-4">Análisis Estratégico con IA</h3>
+                             <button id="gemini-analysis-button" class="gemini-button px-5 py-2.5 text-sm font-semibold rounded-full smooth-transition">✨ Analizar Competidor con IA</button>
                              <div id="gemini-analysis-output" class="mt-4 text-left"></div>
                         </div>
                     </div>
@@ -827,19 +814,13 @@
         let selectedAppsForComparison = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded, initializing...');
-            try {
-                renderFilterButtons();
-                renderApps(appData);
-                renderComparatorSelector();
-                initRadarChart();
-                setupModal();
-                renderMockups();
-                document.getElementById('hypothesis-generator-button').addEventListener('click', generateHypotheses);
-                console.log('All components initialized successfully');
-            } catch (error) {
-                console.error('Error during initialization:', error);
-            }
+            renderFilterButtons();
+            renderApps(appData);
+            renderComparatorSelector();
+            initRadarChart();
+            setupModal();
+            renderMockups();
+            document.getElementById('hypothesis-generator-button').addEventListener('click', generateHypotheses);
         });
 
         function renderFilterButtons() {
@@ -955,22 +936,7 @@
         }
 
         function initRadarChart() {
-            console.log('Initializing radar chart...');
-            const canvas = document.getElementById('strategyRadarChart');
-            if (!canvas) {
-                console.error('Canvas element not found!');
-                return;
-            }
-            console.log('Canvas found:', canvas);
-            
-            // Verificar si Chart.js está disponible
-            if (typeof Chart === 'undefined') {
-                console.error('Chart.js not loaded! Creating fallback visualization...');
-                createFallbackChart();
-                return;
-            }
-            
-            const ctx = canvas.getContext('2d');
+            const ctx = document.getElementById('strategyRadarChart').getContext('2d');
             const chartData = {
                 labels: ['Gestión de Ventas', 'Gestión de Saldo', 'Herramientas de Negocio', 'Operaciones Diarias', 'Acceso a Crédito'],
                 datasets: []
@@ -1015,41 +981,14 @@
                     }
                 }
             };
-            
-            try {
-                radarChart = new Chart(ctx, {
-                    type: 'radar',
-                    data: chartData,
-                    options: chartOptions
-                });
-                console.log('Radar chart created successfully');
-            } catch (error) {
-                console.error('Error creating chart:', error);
-                createFallbackChart();
-            }
-        }
-
-        function createFallbackChart() {
-            const container = document.querySelector('.chart-container');
-            container.innerHTML = `
-                <div class="text-center p-8">
-                    <div class="text-2xl mb-4">📊</div>
-                    <h3 class="text-lg font-bold text-[#3D5A80] mb-2">Gráfico de Comparación</h3>
-                    <p class="text-gray-600 mb-4">Selecciona aplicaciones para comparar sus estrategias</p>
-                    <div id="fallback-comparison" class="space-y-4">
-                        <p class="text-sm text-gray-500">Las comparaciones aparecerán aquí cuando selecciones aplicaciones</p>
-                    </div>
-                </div>
-            `;
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: chartData,
+                options: chartOptions
+            });
         }
 
         function updateRadarChart() {
-            if (!radarChart) {
-                console.log('No radar chart available, updating fallback...');
-                updateFallbackChart();
-                return;
-            }
-
             const colors = [
                 { bg: 'rgba(61, 90, 128, 0.2)', border: 'rgba(61, 90, 128, 1)' },
                 { bg: 'rgba(233, 114, 76, 0.2)', border: 'rgba(233, 114, 76, 1)' },
@@ -1071,54 +1010,6 @@
                 };
             });
             radarChart.update();
-        }
-
-        function updateFallbackChart() {
-            const fallbackContainer = document.getElementById('fallback-comparison');
-            if (!fallbackContainer) return;
-
-            if (selectedAppsForComparison.length === 0) {
-                fallbackContainer.innerHTML = '<p class="text-sm text-gray-500">Las comparaciones aparecerán aquí cuando selecciones aplicaciones</p>';
-                return;
-            }
-
-            const categories = ['Gestión de Ventas', 'Gestión de Saldo', 'Herramientas de Negocio', 'Operaciones Diarias', 'Acceso a Crédito'];
-            const colors = ['#3D5A80', '#E9724C', '#1D976C', '#FF6B35', '#4ECDC4'];
-
-            let html = '<div class="space-y-6">';
-            
-            selectedAppsForComparison.forEach((app, appIndex) => {
-                const focus = app.strategyFocus;
-                html += `
-                    <div class="bg-white p-4 rounded-lg border">
-                        <h4 class="font-bold text-[#3D5A80] mb-3">${app.name}</h4>
-                        <div class="space-y-2">
-                `;
-                
-                categories.forEach((category, index) => {
-                    const value = [focus.sales, focus.balance, focus.tools, focus.operations, focus.credit][index];
-                    const percentage = (value / 5) * 100;
-                    html += `
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-600">${category}</span>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-24 bg-gray-200 rounded-full h-2">
-                                    <div class="h-2 rounded-full" style="width: ${percentage}%; background-color: ${colors[index]}"></div>
-                                </div>
-                                <span class="text-xs font-bold text-gray-700">${value}/5</span>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += `
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            fallbackContainer.innerHTML = html;
         }
 
         function setupModal() {
@@ -1149,234 +1040,38 @@
         }
 
         async function callGeminiAPI(prompt) {
-            // Función temporal que simula respuestas de IA sin necesidad de API key
-            const mockResponses = {
-                'swot': {
-                    'Mercado Pago (Actual)': `
-                        <h4>Análisis SWOT - Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Ecosistema integrado, fuerte presencia en LatAm, múltiples productos financieros</li>
-                            <li><strong>Debilidades:</strong> Experiencia bifurcada, fricción entre secciones, falta de narrativa unificada</li>
-                            <li><strong>Oportunidades:</strong> Unificar la experiencia, mejorar la integración visual, aumentar engagement</li>
-                            <li><strong>Amenazas:</strong> Competidores con UX más fluida, pérdida de usuarios por fricción</li>
-                        </ul>
-                        <h4>Acciones Estratégicas Recomendadas</h4>
-                        <ul>
-                            <li><strong>Unificación Visual:</strong> Crear una home única que integre saldo y herramientas de negocio</li>
-                            <li><strong>Narrativa Clara:</strong> Desarrollar una propuesta de valor unificada "Tu centro de operaciones"</li>
-                            <li><strong>Reducción de Fricción:</strong> Eliminar la necesidad de navegar entre secciones separadas</li>
-                        </ul>
-                    `,
-                    'Square Point of Sale': `
-                        <h4>Análisis SWOT - Square</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> UX centrada en ventas, integración perfecta POS-banca, inteligencia contextual</li>
-                            <li><strong>Debilidades:</strong> Menor presencia en LatAm, enfoque muy US-centric</li>
-                            <li><strong>Oportunidades:</strong> Expansión internacional, más productos de IA</li>
-                            <li><strong>Amenazas:</strong> Regulaciones locales, competencia de neobancos</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Centro de Inteligencia:</strong> Priorizar métricas de negocio sobre saldo en la home</li>
-                            <li><strong>Crédito Contextual:</strong> Ofrecer productos financieros basados en rendimiento</li>
-                            <li><strong>Narrativa de Crecimiento:</strong> Posicionarse como partner del crecimiento del negocio</li>
-                        </ul>
-                    `,
-                    'PayPal Business': `
-                        <h4>Análisis SWOT - PayPal</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Red global masiva, confianza de marca, facilidad de uso</li>
-                            <li><strong>Debilidades:</strong> UX básica, enfoque transaccional limitado</li>
-                            <li><strong>Oportunidades:</strong> Expandir servicios de gestión, mejorar UX</li>
-                            <li><strong>Amenazas:</strong> Competencia de neobancos, commoditización de pagos</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Simplicidad Transaccional:</strong> Mantener la facilidad de PayPal pero con más funcionalidades</li>
-                            <li><strong>Acciones Claras:</strong> Botones grandes para acciones principales (cobrar, transferir)</li>
-                            <li><strong>Integración Wallet:</strong> Conectar saldo digital con mundo físico de forma fluida</li>
-                        </ul>
-                    `,
-                    'Shopify POS': `
-                        <h4>Análisis SWOT - Shopify</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Integración omnicanal perfecta, herramientas de gestión completas</li>
-                            <li><strong>Debilidades:</strong> Enfoque muy e-commerce, menos flexibilidad para otros negocios</li>
-                            <li><strong>Oportunidades:</strong> Expandir a más verticales, mejorar productos financieros</li>
-                            <li><strong>Amenazas:</strong> Competencia de soluciones especializadas</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Herramientas de Trabajo:</strong> Optimizar para velocidad y eficiencia operativa</li>
-                            <li><strong>Integración Omnicanal:</strong> Conectar venta física y digital sin fricción</li>
-                            <li><strong>Productos Contextuales:</strong> Ofrecer financiamiento basado en necesidades del negocio</li>
-                        </ul>
-                    `,
-                    'Revolut Business': `
-                        <h4>Análisis SWOT - Revolut</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> UX moderna, gestión multi-divisa, tarjetas virtuales</li>
-                            <li><strong>Debilidades:</strong> Enfoque muy financiero, menos herramientas de negocio</li>
-                            <li><strong>Oportunidades:</strong> Expandir servicios de negocio, mejorar adquirencia</li>
-                            <li><strong>Amenazas:</strong> Regulaciones bancarias, competencia local</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Cockpit Financiero:</strong> Crear una vista unificada de todos los productos financieros</li>
-                            <li><strong>Control Granular:</strong> Ofrecer gestión detallada de gastos y límites</li>
-                            <li><strong>UX Moderna:</strong> Aplicar principios de diseño de neobancos a la experiencia completa</li>
-                        </ul>
-                    `,
-                    'Nubank PJ': `
-                        <h4>Análisis SWOT - Nubank PJ</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Simplicidad radical, confianza de marca, UX intuitiva</li>
-                            <li><strong>Debilidades:</strong> Productos limitados, enfoque muy brasileño</li>
-                            <li><strong>Oportunidades:</strong> Expandir productos, internacionalización</li>
-                            <li><strong>Amenazas:</strong> Competencia local, regulaciones</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Simplicidad Visual:</strong> Reducir complejidad visual manteniendo funcionalidad</li>
-                            <li><strong>Productos Visibles:</strong> Dar visibilidad permanente a productos de valor</li>
-                            <li><strong>Eliminar Fricción:</strong> Reducir pasos para acciones comunes</li>
-                        </ul>
-                    `,
-                    'Stone': `
-                        <h4>Análisis SWOT - Stone</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Integración hardware-software, red de agentes, confianza local</li>
-                            <li><strong>Debilidades:</strong> Enfoque muy brasileño, dependencia de hardware</li>
-                            <li><strong>Oportunidades:</strong> Expansión regional, más servicios digitales</li>
-                            <li><strong>Amenazas:</strong> Commoditización de hardware, competencia digital</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Equilibrio Integrado:</strong> Balancear ventas y gestión financiera en una vista</li>
-                            <li><strong>Soporte Humano:</strong> Integrar asesoría personalizada en la experiencia digital</li>
-                            <li><strong>Partner Estratégico:</strong> Posicionarse como socio del crecimiento del negocio</li>
-                        </ul>
-                    `,
-                    'PagBank / PagVendas': `
-                        <h4>Análisis SWOT - PagBank/PagVendas</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Saldo que rinde, herramientas de gestión completas, dualidad especializada</li>
-                            <li><strong>Debilidades:</strong> Experiencia fragmentada, necesidad de cambiar de app</li>
-                            <li><strong>Oportunidades:</strong> Unificar experiencia, mejorar integración</li>
-                            <li><strong>Amenazas:</strong> Fricción de usuario, competencia unificada</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Centro Operacional:</strong> Crear una home que priorice métricas de negocio</li>
-                            <li><strong>Herramientas Integradas:</strong> Incluir gestión de inventario y reportes en la experiencia principal</li>
-                            <li><strong>CTA Claro:</strong> Botón prominente para iniciar ventas</li>
-                        </ul>
-                    `,
-                    'GrabMerchant': `
-                        <h4>Análisis SWOT - GrabMerchant</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Ecosistema masivo, integración operativa, datos de comportamiento</li>
-                            <li><strong>Debilidades:</strong> Enfoque muy delivery, menos flexibilidad para otros negocios</li>
-                            <li><strong>Oportunidades:</strong> Expandir a más verticales, mejorar productos financieros</li>
-                            <li><strong>Amenazas:</strong> Dependencia del ecosistema, competencia local</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Centro de Operaciones:</strong> Priorizar acciones operativas en la home</li>
-                            <li><strong>Métricas Operativas:</strong> Mostrar KPIs relevantes para el negocio</li>
-                            <li><strong>Acción Inmediata:</strong> Diseñar para respuestas rápidas y eficiencia</li>
-                        </ul>
-                    `,
-                    'GoBiz (Gojek)': `
-                        <h4>Análisis SWOT - GoBiz</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> Ecosistema operativo, alta eficiencia, datos de pedidos</li>
-                            <li><strong>Debilidades:</strong> Enfoque muy específico, menos flexibilidad</li>
-                            <li><strong>Oportunidades:</strong> Expandir servicios, mejorar productos financieros</li>
-                            <li><strong>Amenazas:</strong> Dependencia del ecosistema, competencia local</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>Eficiencia Operativa:</strong> Optimizar para alto volumen de transacciones</li>
-                            <li><strong>Estado Operativo:</strong> Mostrar claramente el estado del negocio</li>
-                            <li><strong>Flujo de Trabajo:</strong> Diseñar para velocidad y precisión</li>
-                        </ul>
-                    `,
-                    'InfinitePay': `
-                        <h4>Análisis SWOT - InfinitePay</h4>
-                        <ul>
-                            <li><strong>Fortalezas:</strong> IA integrada, UX moderna, productos innovadores</li>
-                            <li><strong>Debilidades:</strong> Base de usuarios menor, menos reconocimiento de marca</li>
-                            <li><strong>Oportunidades:</strong> Diferenciación por IA, expansión de productos</li>
-                            <li><strong>Amenazas:</strong> Competencia establecida, costos de desarrollo de IA</li>
-                        </ul>
-                        <h4>Acciones Estratégicas para Mercado Pago</h4>
-                        <ul>
-                            <li><strong>IA Integrada:</strong> Incorporar asistente inteligente en la experiencia</li>
-                            <li><strong>Productos Innovadores:</strong> Ofrecer soluciones como "Tap to Pay"</li>
-                            <li><strong>Organización Clara:</strong> Separar claramente funciones de banco y negocio</li>
-                        </ul>
-                    `
-                },
-                'hypothesis': {
-                    'default': `
-                        <h4>Hipótesis de Prueba A/B para Nueva Home</h4>
-                        <ul>
-                            <li><strong>Hipótesis 1 - Centro de Operaciones Unificado:</strong> Una home que combine métricas de ventas y saldo en una vista integrada aumentará el engagement en un 25% comparado con la experiencia bifurcada actual.</li>
-                            <li><strong>Hipótesis 2 - Narrativa de Crecimiento:</strong> Priorizar métricas de rendimiento del negocio sobre el saldo bancario aumentará la percepción de valor estratégico en un 30%.</li>
-                            <li><strong>Hipótesis 3 - Acciones Contextuales:</strong> Mostrar productos financieros (crédito, tarjetas) basados en el comportamiento del usuario aumentará la adopción en un 40%.</li>
-                        </ul>
-                    `,
-                    'sales-focused': `
-                        <h4>Hipótesis de Prueba A/B - Enfoque en Ventas</h4>
-                        <ul>
-                            <li><strong>Hipótesis 1 - Métricas de Rendimiento:</strong> Mostrar ventas brutas del día como métrica principal aumentará la percepción de valor del negocio en un 35%.</li>
-                            <li><strong>Hipótesis 2 - Comparativas Visuales:</strong> Incluir comparativas de ventas (hoy vs ayer) aumentará el engagement en un 28%.</li>
-                            <li><strong>Hipótesis 3 - CTA de Venta:</strong> Un botón prominente "Iniciar Venta" en la home aumentará la conversión en un 45%.</li>
-                        </ul>
-                    `,
-                    'balance-focused': `
-                        <h4>Hipótesis de Prueba A/B - Enfoque en Saldo</h4>
-                        <ul>
-                            <li><strong>Hipótesis 1 - Saldo Prominente:</strong> Mostrar el saldo como elemento principal aumentará la confianza financiera en un 30%.</li>
-                            <li><strong>Hipótesis 2 - Acciones Financieras:</strong> Botones grandes para "Transferir" y "Solicitar" aumentarán las transacciones en un 25%.</li>
-                            <li><strong>Hipótesis 3 - Productos Visibles:</strong> Mostrar tarjetas y créditos permanentemente aumentará la adopción en un 40%.</li>
-                        </ul>
-                    `,
-                    'mixed': `
-                        <h4>Hipótesis de Prueba A/B - Enfoque Mixto</h4>
-                        <ul>
-                            <li><strong>Hipótesis 1 - Vista Unificada:</strong> Combinar métricas de ventas y saldo en una sola vista aumentará el engagement general en un 32%.</li>
-                            <li><strong>Hipótesis 2 - Navegación Contextual:</strong> Mostrar herramientas relevantes según el contexto aumentará la eficiencia en un 38%.</li>
-                            <li><strong>Hipótesis 3 - Personalización:</strong> Adaptar la home según el tipo de negocio aumentará la satisfacción en un 42%.</li>
-                        </ul>
-                    `
-                }
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }]
             };
 
-            // Simular delay de red
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-            if (prompt.includes('análisis estratégico') || prompt.includes('SWOT')) {
-                const appName = prompt.match(/"([^"]+)"/)?.[1];
-                return mockResponses.swot[appName] || mockResponses.swot['Mercado Pago (Actual)'];
-            } else if (prompt.includes('hipótesis')) {
-                // Determinar el tipo de hipótesis basado en las apps seleccionadas
-                const hasSalesFocus = selectedAppsForComparison.some(app => app.strategyFocus.sales >= 4);
-                const hasBalanceFocus = selectedAppsForComparison.some(app => app.strategyFocus.balance >= 4);
-                
-                if (hasSalesFocus && hasBalanceFocus) {
-                    return mockResponses.hypothesis.mixed;
-                } else if (hasSalesFocus) {
-                    return mockResponses.hypothesis['sales-focused'];
-                } else if (hasBalanceFocus) {
-                    return mockResponses.hypothesis['balance-focused'];
-                } else {
-                    return mockResponses.hypothesis.default;
+                if (!response.ok) {
+                    throw new Error(`Error en la API: ${response.statusText}`);
                 }
-            }
 
-            return "Análisis no disponible para esta aplicación.";
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    return "No se pudo obtener una respuesta de la IA. La estructura de la respuesta no es la esperada.";
+                }
+            } catch (error) {
+                console.error("Error al llamar a la API de Gemini:", error);
+                return `Error al conectar con el servicio de IA: ${error.message}`;
+            }
         }
 
         async function generateSwotAnalysis(app) {
